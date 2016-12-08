@@ -485,8 +485,8 @@ bool PDFInfo :: parseEncObject ( const string obj ) {
 
 vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
     unsigned i, j, l;
-    uint8_t b, d;
-    uint8_t *tmp = new uint8_t[s.length()];
+	uint8_t b, d;
+	std::vector<uint8_t> tmp(s.length());
     vector<uint8_t> ret;
 
     for(i=0, l=0; i<s.length(); i++, l++) {
@@ -531,14 +531,14 @@ vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
                        //We need to step back one step if we reached the end of string
                        //or the end of digits (like for example \0000)
                        if(i < s.length() || j < 3) {i--;}
-                       b = d;
+					   ret.push_back(d);
                     }
             }
         }
-        tmp[l] = b;
+		tmp.at(l) = b;
     }
-    for(unsigned i = 0; i < l-1; i++)
-        ret.push_back(tmp[i]);
+	for(unsigned i = 0; i < l-1; i++)
+		ret.push_back(tmp.at((i)));
     return ret;
 }
 
