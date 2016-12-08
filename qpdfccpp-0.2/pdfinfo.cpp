@@ -119,7 +119,7 @@ uint8_t hexToInt(const int b) {
 //ricerca delle informazioni contenute al suo interno. l'intera parte è privata
 //e resa trasparente dalla funzione LoadPdfInfos ();
 
-void PDFInfo :: LoadPdfInfos ( const string n = "" ) {
+void PDFInfo :: LoadPdfInfos ( const string &n = "" ) {
     if( "" != n )
         nomeFile = n;
     //Apro il file in modalità binaria e determino se tutto è andato bene
@@ -283,7 +283,7 @@ int PDFInfo :: findTrailer ( ) {
 
 //Recupero l'ID del file "<...><...>" di 32 byte contenuto tra le prima parentesi
 //acute
-vector<uint8_t> PDFInfo :: parseID ( string str = "") {
+vector<uint8_t> PDFInfo :: parseID ( const string &str = "") {
     vector<uint8_t> ret;
     uint8_t buf[BUFFSIZE];
     int len = 0, i = 0;
@@ -359,7 +359,7 @@ bool PDFInfo :: getEncInfo ( const int e_pos ) {
     return false;
 }
 
-bool PDFInfo :: parseEncObject ( const string obj ) {
+bool PDFInfo :: parseEncObject ( const string &obj ) {
     int ch, i;
     bool fe = false,
          ff = false,
@@ -483,7 +483,7 @@ bool PDFInfo :: parseEncObject ( const string obj ) {
 }
 
 
-vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
+vector<uint8_t> PDFInfo :: stringToByte ( const string &s ) {
     unsigned i, j, l;
 	uint8_t b, d;
 	std::vector<uint8_t> tmp(s.length());
@@ -542,7 +542,7 @@ vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
     return ret;
 }
 
-void PDFInfo :: initCracking ( const string usr_pswd = "" ) {
+void PDFInfo :: initCracking ( const string &usr_pswd = "" ) {
     //Verifico che siano state trovate informazioni riguardo alla cifratura
     if( !infoPdf ) {
         VERBOSE(1,"[PDFInfo::initCracking()] File non presente!")
@@ -640,7 +640,7 @@ void PDFInfo :: initCracking ( const string usr_pswd = "" ) {
     if( infoCrack->user_pswd && (( infoPdf->revision == 2 && !userPasswordV1R2() ) ||
                       ( infoPdf->revision == 3 && !userPasswordV2R3() )) ) {
         VERBOSE(1,"[PDFInfo::initCracking()] WARNING: la user_password specificata non e' corretta! Re-initializing...")
-        initCracking();
+		initCracking("");
     }
 }
 
@@ -676,7 +676,7 @@ bool PDFInfo :: userPasswordV2R3 () {
     uint8_t * tmp = new uint8_t[32];
     for(int i = 0; i < infoCrack->u_key.size(); i++)
         key[i] = infoCrack->u_key[i];
-    for(int i = 0; i < 16; i++)
+	for(int i = 0; i < 16; i++)
         tmp[i] = infoCrack->u_string[i];
 
     //Cifro la key per ottenere cifr
