@@ -283,7 +283,7 @@ int PDFInfo :: findTrailer ( ) {
 
 //Recupero l'ID del file "<...><...>" di 32 byte contenuto tra le prima parentesi
 //acute
-vector<uint8_t> PDFInfo :: parseID ( string str ) {
+vector<uint8_t> PDFInfo :: parseID ( string str = "") {
     vector<uint8_t> ret;
     uint8_t buf[BUFFSIZE];
     int len = 0, i = 0;
