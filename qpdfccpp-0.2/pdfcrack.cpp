@@ -17,7 +17,7 @@
  * USA.
 */
 
-#include "PDFCrack.hpp"
+#include "pdfcrack.hpp"
 #include <iostream>
 using namespace std;
 

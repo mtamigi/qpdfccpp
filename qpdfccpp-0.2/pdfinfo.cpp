@@ -21,7 +21,7 @@
 using namespace std;
 #include <stdlib.h>
 
-#include "PDFInfo.hpp"
+#include "pdfinfo.hpp"
 //Per i test di verifica sulle chiavi di inizializzazione
 #include "md5.hpp"
 #include "rc4.hpp"
