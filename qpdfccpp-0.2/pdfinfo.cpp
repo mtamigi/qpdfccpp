@@ -21,7 +21,7 @@
 using namespace std;
 #include <stdlib.h>
 
-#include "PDFInfo.hpp"
+#include "pdfinfo.hpp"
 //Per i test di verifica sulle chiavi di inizializzazione
 #include "md5.hpp"
 #include "rc4.hpp"
@@ -44,8 +44,8 @@ printHexString(vector<uint8_t> str) {
 
 PDFInfo :: PDFInfo () : nomeFile(), is() {
     //Azzero tutti i puntatori
-    infoPdf = NULL;
-    infoCrack = NULL;
+	infoPdf = nullptr;
+	infoCrack = nullptr;
     //DEBUG INFOS
     verbose = 1;
     //Pulisco la memoria per la lettura del PDF
@@ -119,7 +119,7 @@ uint8_t hexToInt(const int b) {
 //ricerca delle informazioni contenute al suo interno. l'intera parte è privata
 //e resa trasparente dalla funzione LoadPdfInfos ();
 
-void PDFInfo :: LoadPdfInfos ( const string n = "" ) {
+void PDFInfo :: LoadPdfInfos ( const string &n = "" ) {
     if( "" != n )
         nomeFile = n;
     //Apro il file in modalità binaria e determino se tutto è andato bene
@@ -135,7 +135,7 @@ void PDFInfo :: LoadPdfInfos ( const string n = "" ) {
     VERBOSE(3,"[PDFInfo::LoadPdfInfos()] Lunghezza file: " << dimFile)
     //Pulisco la memoria
     if(!infoPdf) {
-        VERBOSE(3,"[PDFInfo::LoadPdfInfos()] infoPdf != NULL : pulisco la memoria")
+		VERBOSE(3,"[PDFInfo::LoadPdfInfos()] infoPdf != nullptr : pulisco la memoria")
         delete infoPdf;
     }
     infoPdf = new EncData;
@@ -283,7 +283,7 @@ int PDFInfo :: findTrailer ( ) {
 
 //Recupero l'ID del file "<...><...>" di 32 byte contenuto tra le prima parentesi
 //acute
-vector<uint8_t> PDFInfo :: parseID ( string str ) {
+vector<uint8_t> PDFInfo :: parseID ( const string &str = "") {
     vector<uint8_t> ret;
     uint8_t buf[BUFFSIZE];
     int len = 0, i = 0;
@@ -359,7 +359,7 @@ bool PDFInfo :: getEncInfo ( const int e_pos ) {
     return false;
 }
 
-bool PDFInfo :: parseEncObject ( const string obj ) {
+bool PDFInfo :: parseEncObject ( const string &obj ) {
     int ch, i;
     bool fe = false,
          ff = false,
@@ -483,10 +483,10 @@ bool PDFInfo :: parseEncObject ( const string obj ) {
 }
 
 
-vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
+vector<uint8_t> PDFInfo :: stringToByte ( const string &s ) {
     unsigned i, j, l;
-    uint8_t b, d;
-    uint8_t *tmp = new uint8_t[s.length()];
+	uint8_t b, d;
+	std::vector<uint8_t> tmp(s.length());
     vector<uint8_t> ret;
 
     for(i=0, l=0; i<s.length(); i++, l++) {
@@ -531,18 +531,18 @@ vector<uint8_t> PDFInfo :: stringToByte ( const string s ) {
                        //We need to step back one step if we reached the end of string
                        //or the end of digits (like for example \0000)
                        if(i < s.length() || j < 3) {i--;}
-                       b = d;
+					   ret.push_back(d);
                     }
             }
         }
-        tmp[l] = b;
+		tmp.at(l) = b;
     }
-    for(unsigned i = 0; i < l-1; i++)
-        ret.push_back(tmp[i]);
+	for(unsigned i = 0; i < l-1; i++)
+		ret.push_back(tmp.at((i)));
     return ret;
 }
 
-void PDFInfo :: initCracking ( const string usr_pswd = "" ) {
+void PDFInfo :: initCracking ( const string &usr_pswd = "" ) {
     //Verifico che siano state trovate informazioni riguardo alla cifratura
     if( !infoPdf ) {
         VERBOSE(1,"[PDFInfo::initCracking()] File non presente!")
@@ -640,7 +640,7 @@ void PDFInfo :: initCracking ( const string usr_pswd = "" ) {
     if( infoCrack->user_pswd && (( infoPdf->revision == 2 && !userPasswordV1R2() ) ||
                       ( infoPdf->revision == 3 && !userPasswordV2R3() )) ) {
         VERBOSE(1,"[PDFInfo::initCracking()] WARNING: la user_password specificata non e' corretta! Re-initializing...")
-        initCracking();
+		initCracking("");
     }
 }
 
@@ -676,7 +676,7 @@ bool PDFInfo :: userPasswordV2R3 () {
     uint8_t * tmp = new uint8_t[32];
     for(int i = 0; i < infoCrack->u_key.size(); i++)
         key[i] = infoCrack->u_key[i];
-    for(int i = 0; i < 16; i++)
+	for(int i = 0; i < 16; i++)
         tmp[i] = infoCrack->u_string[i];
 
     //Cifro la key per ottenere cifr
@@ -706,7 +706,7 @@ void PDFInfo :: clearPdfInfos () {
         infoPdf->u_string.clear();
         infoPdf->fileID.clear();
         delete infoPdf;
-        infoPdf = NULL;
+		infoPdf = nullptr;
     }
     //Chiudo lo streaming da file (se non è già chiuso)
     if(is.is_open())
@@ -728,6 +728,6 @@ void PDFInfo :: clearWorkSpace () {
         infoCrack->u_string.clear();
         infoCrack->own_pad.clear();
         delete infoCrack;
-        infoCrack = NULL;
+		infoCrack = nullptr;
     }
 }

@@ -21,8 +21,8 @@
 #define QPDFCCPP_H
 
 #include <QMainWindow>
-#include "qpdfccpp-0.2/pdfInfo.hpp"
-#include "qpdfccpp-0.2/pdfCrack.hpp"
+#include "qpdfccpp-0.2/pdfinfo.hpp"
+#include "qpdfccpp-0.2/pdfcrack.hpp"
 #include "qpdfccpp-0.2/pdfworkspace.hpp"
 
 namespace Ui {

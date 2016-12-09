@@ -22,6 +22,7 @@
 
 #include <cstring>
 #include <vector>
+#include <array>
 #include <fstream>
 
 #include <QThread>
