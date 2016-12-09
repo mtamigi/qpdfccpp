@@ -44,8 +44,8 @@ printHexString(vector<uint8_t> str) {
 
 PDFInfo :: PDFInfo () : nomeFile(), is() {
     //Azzero tutti i puntatori
-    infoPdf = NULL;
-    infoCrack = NULL;
+	infoPdf = nullptr;
+	infoCrack = nullptr;
     //DEBUG INFOS
     verbose = 1;
     //Pulisco la memoria per la lettura del PDF
@@ -135,7 +135,7 @@ void PDFInfo :: LoadPdfInfos ( const string n = "" ) {
     VERBOSE(3,"[PDFInfo::LoadPdfInfos()] Lunghezza file: " << dimFile)
     //Pulisco la memoria
     if(!infoPdf) {
-        VERBOSE(3,"[PDFInfo::LoadPdfInfos()] infoPdf != NULL : pulisco la memoria")
+		VERBOSE(3,"[PDFInfo::LoadPdfInfos()] infoPdf != nullptr : pulisco la memoria")
         delete infoPdf;
     }
     infoPdf = new EncData;
@@ -706,7 +706,7 @@ void PDFInfo :: clearPdfInfos () {
         infoPdf->u_string.clear();
         infoPdf->fileID.clear();
         delete infoPdf;
-        infoPdf = NULL;
+		infoPdf = nullptr;
     }
     //Chiudo lo streaming da file (se non è già chiuso)
     if(is.is_open())
@@ -728,6 +728,6 @@ void PDFInfo :: clearWorkSpace () {
         infoCrack->u_string.clear();
         infoCrack->own_pad.clear();
         delete infoCrack;
-        infoCrack = NULL;
+		infoCrack = nullptr;
     }
 }

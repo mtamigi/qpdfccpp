@@ -27,7 +27,7 @@ using namespace std;
 
 
 PDFWorkspace :: PDFWorkspace () {
-     crack = NULL;
+	 crack = nullptr;
      stato = new int[32];
      lenStato = 0;
      max = 0;

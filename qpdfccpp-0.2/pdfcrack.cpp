@@ -34,13 +34,13 @@ using namespace std;
 //----------------------------------------------------------------------------//
 PDFCrack :: PDFCrack () {
     //Azzero tutti i puntatori
-    charSet = NULL;
+	charSet = nullptr;
     state = new int[32];
-    o_key = NULL;
-    u_key = NULL;
-    o_string = NULL;
-    u_string = NULL;
-    opad = NULL;
+	o_key = nullptr;
+	u_key = nullptr;
+	o_string = nullptr;
+	u_string = nullptr;
+	opad = nullptr;
     //Imposto le variabili a 0
     lenSet = 0;
     numCifr = 0;
@@ -131,7 +131,7 @@ void PDFCrack :: SetCharset ( const string chs ) {
 
 //Accetto SEMPRE e SOLO vettori st lunghi almeno 32!!!
 //inoltre si presume che lo stato sia sempre >= delle cifre da ciclare
-void PDFCrack :: SetState ( int len , int * st = NULL ) {
+void PDFCrack :: SetState ( int len , int * st = nullptr ) {
     //Genero il vettore degli stati e lo carico (o lo azzero)
     if( st ) {
         //Copio lo stato
@@ -201,7 +201,7 @@ void PDFCrack :: SetNextPassword () {
 void PDFCrack :: u_crack () {
     //Imposto la key a ukey
     key = u_key;
-    //Come prima cosa verifico che la password sia diversa da nulla
+	//Come prima cosa verifico che la password sia diversa da nullptra
     if ( user_password() ) {
         u_found = true;
         user_pswd = false;
@@ -240,7 +240,7 @@ void PDFCrack :: o_crack () {
         key[i] = o_key[i];
         key2[i] = o_key[i];
     }
-    //Come prima cosa verifico che la password sia diversa da nulla
+	//Come prima cosa verifico che la password sia diversa da nullptra
     if ( owner_password() ) {
         o_found = true;
         o_password = "";
@@ -317,7 +317,7 @@ bool PDFCrackV1R2 :: owner_password () {
 }
 
 //Reverse dell'algoritmo 3.4 (per cifrare la o_string) nel caso la user_password
-//sia nulla
+//sia nullptra
 bool PDFCrackV1R2 :: owner_password_nouser () {
     md5(key,32,digest);
     Rc4_40(o_string,32,digest,tmp);
