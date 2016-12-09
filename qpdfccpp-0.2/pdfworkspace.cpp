@@ -119,7 +119,8 @@ void PDFWorkspace :: run () {
                 SetNextStatus();
             }
         }
-        i = ++i % cores; //Incremento circolarmente il contatore
+		if (cores)  //Incremento circolarmente il contatore
+		   i = ++i % cores;
     }
     stop = clock();
     cout << "[run()] End: time: " << (stop-start) << " msec" << endl;

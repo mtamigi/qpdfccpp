@@ -35,11 +35,11 @@ class PDFInfo {
         //Funzioni per la shell da sostituire a parametri pubblici
         void PrintInfos ();
         //Funzioni primarie
-        void LoadPdfInfos ( const string );
-        void initCracking ( const string ); //Gli passo la user_password (se la conosco)
+		void LoadPdfInfos ( const string &);
+		void initCracking ( const string &); //Gli passo la user_password (se la conosco)
         //Metodi SET e GET
-        inline void SetFile ( const string file ) { nomeFile = file; }
-        inline string GetFile () { return nomeFile; }
+		inline void SetFile ( const string &file ) { nomeFile = file; }
+		inline string GetFile () { return nomeFile; }
         inline unsigned GetDimFile () { return dimFile; }
         inline int GetErr () { return err; }
         inline int GetWrn () { return wrn; }
@@ -76,10 +76,10 @@ class PDFInfo {
         //Completate e (apparentemente) funzionanti! (rifatte da pdfcrack-0.11)
         int readPdfFile ();
         int findTrailer ();
-        vector<uint8_t> parseID ( const string );
+		vector<uint8_t> parseID ( const string &);
         bool getEncInfo ( const int );
-        bool parseEncObject ( const string );
-        vector<uint8_t> stringToByte ( const string );
+		bool parseEncObject ( const string &);
+		vector<uint8_t> stringToByte ( const string &);
         void clearPdfInfos ();
         //Funzioni per la generazione del WorkSpace di cracking dei PDF
         bool userPasswordV1R2();
